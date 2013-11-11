@@ -136,4 +136,27 @@ object Assignment1 {
     def multDigitsHigher(string: List[Char]): Int = {
         string.filter(_.isDigit).map(_.asDigit).foldLeft(1)(_*_)
     }
+    
+    /** 6: Capitalisation */
+    
+    /** List Comprehension */
+    def capitaliseComp(string: List[Char]): List[Char] = {
+        for (char <- string) yield char.toUpper
+    }
+    
+    /** Recursion */
+    def capitaliseRec(string: List[Char]): List[Char] = {
+        def recStep(acc: ListBuffer[Char], rest: List[Char]): List[Char] = {
+            rest match {
+                case List()      => acc.toList
+                case char :: str => recStep(acc += char.toUpper, str)
+            }
+        }
+        recStep(ListBuffer(), string)
+    }
+    
+    /** Higher-order Functions */
+    def capitaliseHigher(string: List[Char]): List[Char] = {
+        string.map(_.toUpper)
+    }
 }
