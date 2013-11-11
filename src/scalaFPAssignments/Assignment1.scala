@@ -49,4 +49,5 @@ object Assignment1 {
         }
         recurCount(0, coins.sortWith(_ < _).distinct)
     }
+
 }
