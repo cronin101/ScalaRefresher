@@ -141,7 +141,9 @@ object Assignment1 {
     
     /** List Comprehension */
     def capitaliseComp(string: List[Char]): List[Char] = {
-        for (char <- string) yield char.toUpper
+        string match  {
+            case c :: str => c.toUpper :: (for (char <- str) yield char.toLower)
+        }
     }
     
     /** Recursion */
@@ -149,14 +151,56 @@ object Assignment1 {
         def recStep(acc: ListBuffer[Char], rest: List[Char]): List[Char] = {
             rest match {
                 case List()      => acc.toList
-                case char :: str => recStep(acc += char.toUpper, str)
+                case char :: str => recStep(acc += char.toLower, str)
             }
         }
-        recStep(ListBuffer(), string)
+        
+        string match {
+            case c :: str => recStep(ListBuffer(c.toUpper), str)
+        }
     }
     
     /** Higher-order Functions */
     def capitaliseHigher(string: List[Char]): List[Char] = {
-        string.map(_.toUpper)
+        string match {
+            case c :: str => c.toUpper :: string.map(_.toLower)
+        }
     }
+    
+    /** 7: Title-case a sentence using the previous function */
+    
+    /** Middle words should be capitalised if at least 4 letters long */
+    def correctCase(string: String): String = {
+        if (string.length >= 4) capitaliseHigher(string.toList).toString
+        else                    string
+    }
+    
+    /** List Comprehension */
+    def titleComp(sentence: List[String]): List[String] = {
+        sentence match {
+            case str :: strs => capitaliseHigher(str.toList).toString :: (for (str <- strs) yield correctCase(str))
+        }
+    }
+    
+    /** Recursion */
+    def titleRec(sentence: List[String]): List[String] = {
+        def recStep(acc: ListBuffer[String], rest: List[String]): List[String] = {
+            rest match {
+                case List()      => acc.toList
+                case str :: strs => recStep(acc += correctCase(str), strs)
+            }
+        }
+        
+        sentence match {
+            case str :: strs => capitaliseHigher(str.toList).toString :: recStep(ListBuffer(), strs)
+        }
+    }
+    
+    /** Higher-order Functions */
+    def titleHigher(sentence: List[String]): List[String] = {
+        sentence match {
+            case str :: strs => capitaliseHigher(str.toList).toString :: strs.map (str => correctCase(str))
+        }
+    }
+
 }
