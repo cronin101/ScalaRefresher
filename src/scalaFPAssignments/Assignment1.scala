@@ -20,10 +20,8 @@ object Assignment1 {
 
     /** Returns the element at Column c and Row r of Pascal's Triangle */
     def pascal(c: Int, r: Int): Int = {
-        if (c == 0 || c == r)
-            1
-        else
-            pascal(c - 1, r - 1) + pascal(c, r - 1)
+        if (c == 0 || c == r) 1
+        else                  pascal(c - 1, r - 1) + pascal(c, r - 1)
     }
 
     /** Returns whether a string has balanced parentheses */
@@ -32,10 +30,8 @@ object Assignment1 {
             remaining match {
                 case Nil       => depth == 0
                 case '(' :: xs => recurBalanced(depth + 1, xs)
-                case ')' :: xs => if (depth > 0)
-                                      recurBalanced(depth - 1, xs)
-                                  else
-                                      false
+                case ')' :: xs => if (depth > 0) recurBalanced(depth - 1, xs)
+                                  else           false
                 case _ :: xs   => recurBalanced(depth, xs)
             }
         }
@@ -46,13 +42,10 @@ object Assignment1 {
     def countChange(money: Int, coins: List[Int]): Int = {
         def recurCount(total: Int, coinsLeft: List[Int]): Int = {
             val remaining = money - total
-            if (remaining == 0 || coinsLeft.isEmpty || remaining < coinsLeft.head)
-                0
-            else if (total + coinsLeft.head == money)
-                1
-            else
-                recurCount(total + coinsLeft.head, coinsLeft) +
-                        recurCount(total, coinsLeft.tail)
+            if (remaining == 0 || coinsLeft.isEmpty || remaining < coinsLeft.head) 0
+            else if (total + coinsLeft.head == money) 1
+            else recurCount(total + coinsLeft.head, coinsLeft) +
+                    recurCount(total, coinsLeft.tail)
         }
         recurCount(0, coins.sortWith(_ < _).distinct)
     }

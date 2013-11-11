@@ -13,8 +13,7 @@ object Assignment1 {
 
     /** List Comprehension */
     def halveEvensComp(nums: List[Int]): List[Int] = {
-        for (i <- nums if i % 2 == 0)
-            yield i / 2
+        for (i <- nums if i % 2 == 0) yield i / 2
     }
 
     /** Recursion */
@@ -22,10 +21,8 @@ object Assignment1 {
         def recStep(acc: ListBuffer[Int], left: List[Int]): List[Int] = {
             left match {
                 case List()  => acc.toList
-                case x :: xs => if (x % 2 == 0)
-                                    recStep(acc += x / 2, xs)
-                                else
-                                    recStep(acc, xs)
+                case x :: xs => if (x % 2 == 0) recStep(acc += x / 2, xs)
+                                else            recStep(acc, xs)
             }
         }
         recStep(ListBuffer(), nums)
@@ -40,8 +37,7 @@ object Assignment1 {
 
     /** List Comprehension */
     def inRangeComp(nums: List[Int], lower: Int, upper: Int): List[Int] = {
-        for (i <- nums if lower until upper contains i)
-            yield i
+        for (i <- nums if lower until upper contains i) yield i
     }
 
     /** Recursion */
@@ -49,10 +45,8 @@ object Assignment1 {
         def recStep(acc: ListBuffer[Int], left: List[Int]): List[Int] = {
             left match {
                 case List()  => acc.toList
-                case x :: xs => if (lower until upper contains x)
-                                    recStep(acc += x, xs)
-                                else
-                                    recStep(acc, xs)
+                case x :: xs => if (lower until upper contains x) recStep(acc += x, xs)
+                                else                              recStep(acc, xs)
             }
         }
         recStep(ListBuffer(), nums)
