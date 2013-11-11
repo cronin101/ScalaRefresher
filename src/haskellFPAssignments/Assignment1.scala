@@ -172,7 +172,7 @@ object Assignment1 {
     /** Middle words should be capitalised if at least 4 letters long */
     def correctCase(string: String): String = {
         if (string.length >= 4) capitaliseHigher(string.toList).toString
-        else                    string
+        else                    string.map(_.toLower)
     }
     
     /** List Comprehension */
