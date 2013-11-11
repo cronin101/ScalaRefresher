@@ -111,4 +111,29 @@ object Assignment1 {
     def pennyPincherHigher(prices: List[Double]): Double = {
         prices.map(x => x * 0.9).filter(x => x <= pincherLimit).sum
     }
+    
+    /** 5: Write a function that returns the product of all digits in the input string.
+     *  If there are no digits, the function should return the identity: 1 */
+    
+    /** List Comprehension */
+    def multDigitsComp(string: List[Char]): Int = {
+        (for (char <- string if char.isDigit) yield char.asDigit).foldLeft(1)(_*_)
+    }
+    
+    /** Recursion */
+    def multDigitsRec(string: List[Char]): Int = {
+        def recStep(acc: Int, rest: List[Char]): Int = {
+            rest match {
+                case List()      => acc
+                case char :: str => if (char.isDigit) recStep(acc * char.asDigit, str)
+                                    else              recStep(acc, str)
+            }
+        }
+        recStep(1, string)
+    }
+    
+    /** Higher-order Functions */
+    def multDigitsHigher(string: List[Char]): Int = {
+        string.filter(_.isDigit).map(_.asDigit).foldLeft(1)(_*_)
+    }
 }
